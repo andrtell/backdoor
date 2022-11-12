@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
+  "time"
 )
 
 func main() {
@@ -16,10 +17,12 @@ func main() {
 }
 
 func podmanAutoUpdate(w http.ResponseWriter, r *http.Request) {
-	runCommand("podman", "auto-update")
+	go runCommand("podman", "auto-update")
 }
 
 func runCommand(command string, args ...string) {
+  time.Sleep(1 * time.Second)
+
 	cmd := exec.Command(command, args...)
 
 	stdout, _ := cmd.StdoutPipe()
